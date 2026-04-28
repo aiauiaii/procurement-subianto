@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1123" height="794" viewBox="0 0 1123 794">
+<defs><filter id="shadow" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#13232b" flood-opacity="0.10"/></filter><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#1f7a68"/></marker></defs>
+<rect width="1123" height="794" fill="#f6f8f8"/>
+<text x="48" y="46" font-family="Arial" font-size="28" font-weight="800" fill="#13232b">Procurement Website System Overview</text>
+<text x="48" y="72" font-family="Arial" font-size="13.5" fill="#60727e">Ringkasan cara sistem membantu proses pengadaan, approval dokumen, rollback, dan arsip final</text>
+<g><circle cx="61" cy="99" r="13" fill="#1f7a68"/><text x="61" y="104" text-anchor="middle" font-family="Arial" font-size="13" font-weight="800" fill="#fff">1</text><text x="84" y="104" font-family="Arial" font-size="17" font-weight="800" fill="#13232b">Aktor &amp; Ruang Kerja</text></g>
+<rect x="48" y="140" width="315" height="116" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="48" y="140" width="315" height="44" rx="16" fill="#e8f4f1"/>
+<rect x="48" y="168" width="315" height="16" fill="#e8f4f1"/>
+<text x="68" y="169" font-family="Arial" font-size="17" font-weight="800" fill="#1f7a68">Requester</text>
+<circle cx="72" cy="205" r="3.5" fill="#1f7a68"/>
+<text x="84" y="209" font-family="Arial" font-size="12.3" fill="#13232b">Membuat entry procurement</text>
+<circle cx="72" cy="225" r="3.5" fill="#1f7a68"/>
+<text x="84" y="229" font-family="Arial" font-size="12.3" fill="#13232b">Mengupload dokumen wajib per stage</text>
+<circle cx="72" cy="245" r="3.5" fill="#1f7a68"/>
+<text x="84" y="249" font-family="Arial" font-size="12.3" fill="#13232b">Melihat rejected note dan upload koreksi</text>
+<rect x="404" y="140" width="315" height="116" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="404" y="140" width="315" height="44" rx="16" fill="#fff3e2"/>
+<rect x="404" y="168" width="315" height="16" fill="#fff3e2"/>
+<text x="424" y="169" font-family="Arial" font-size="17" font-weight="800" fill="#a4510f">Procurement Admin</text>
+<circle cx="428" cy="205" r="3.5" fill="#a4510f"/>
+<text x="440" y="209" font-family="Arial" font-size="12.3" fill="#13232b">Monitoring semua entry vendor/requester</text>
+<circle cx="428" cy="225" r="3.5" fill="#a4510f"/>
+<text x="440" y="229" font-family="Arial" font-size="12.3" fill="#13232b">Review approval per document</text>
+<circle cx="428" cy="245" r="3.5" fill="#a4510f"/>
+<text x="440" y="249" font-family="Arial" font-size="12.3" fill="#13232b">Kelola akun dan workflow</text>
+<rect x="760" y="140" width="315" height="116" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="760" y="140" width="315" height="44" rx="16" fill="#eaf2ff"/>
+<rect x="760" y="168" width="315" height="16" fill="#eaf2ff"/>
+<text x="780" y="169" font-family="Arial" font-size="17" font-weight="800" fill="#0d6efd">System &amp; Database</text>
+<circle cx="784" cy="205" r="3.5" fill="#0d6efd"/>
+<text x="796" y="209" font-family="Arial" font-size="12.3" fill="#13232b">Menyimpan file sesuai folder stage/activity/document</text>
+<circle cx="784" cy="225" r="3.5" fill="#0d6efd"/>
+<text x="796" y="229" font-family="Arial" font-size="12.3" fill="#13232b">Menjaga status stage dan dokumen</text>
+<circle cx="784" cy="245" r="3.5" fill="#0d6efd"/>
+<text x="796" y="249" font-family="Arial" font-size="12.3" fill="#13232b">Membuat ZIP final saat complete</text>
+<g><circle cx="61" cy="300" r="13" fill="#1f7a68"/><text x="61" y="305" text-anchor="middle" font-family="Arial" font-size="13" font-weight="800" fill="#fff">2</text><text x="84" y="305" font-family="Arial" font-size="17" font-weight="800" fill="#13232b">Alur Status Entry</text></g>
+<rect x="48" y="342" width="176" height="110" rx="18" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="66" y="360" width="140" height="32" rx="16" fill="#e8f4f1"/>
+<text x="136" y="381" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="#1f7a68">In progress</text>
+<text x="136" y="414" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">Requester mengisi dokumen</text>
+<text x="136" y="429" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">stage aktif</text>
+<path d="M226 395 L253 395" stroke="#1f7a68" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="259" y="342" width="176" height="110" rx="18" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="277" y="360" width="140" height="32" rx="16" fill="#fff3e2"/>
+<text x="347" y="381" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="#a4510f">Waiting approval</text>
+<text x="347" y="414" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">Stage dikunci sampai admin</text>
+<text x="347" y="429" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">review</text>
+<path d="M437 395 L464 395" stroke="#1f7a68" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="470" y="342" width="176" height="110" rx="18" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="488" y="360" width="140" height="32" rx="16" fill="#fff0ee"/>
+<text x="558" y="381" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="#b3261e">Revision</text>
+<text x="558" y="414" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">Rejected document</text>
+<text x="558" y="429" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">dikoreksi user</text>
+<path d="M648 395 L675 395" stroke="#1f7a68" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="681" y="342" width="176" height="110" rx="18" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="699" y="360" width="140" height="32" rx="16" fill="#eaf2ff"/>
+<text x="769" y="381" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="#0d6efd">Next stage</text>
+<text x="769" y="414" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">Semua document approved,</text>
+<text x="769" y="429" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">lanjut stage berikutnya</text>
+<path d="M859 395 L886 395" stroke="#1f7a68" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="892" y="342" width="176" height="110" rx="18" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="910" y="360" width="140" height="32" rx="16" fill="#e8f4f1"/>
+<text x="980" y="381" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="#115d50">Complete</text>
+<text x="980" y="414" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">Stage 7 approved, ZIP</text>
+<text x="980" y="429" text-anchor="middle" font-family="Arial" font-size="11.2" fill="#60727e">tersedia</text>
+<g><circle cx="61" cy="498" r="13" fill="#1f7a68"/><text x="61" y="503" text-anchor="middle" font-family="Arial" font-size="13" font-weight="800" fill="#fff">3</text><text x="84" y="503" font-family="Arial" font-size="17" font-weight="800" fill="#13232b">Aturan Kunci Sistem</text></g>
+<rect x="48" y="540" width="330" height="136" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="48" y="540" width="8" height="136" rx="4" fill="#0d6efd"/>
+<text x="74" y="572" font-family="Arial" font-size="16" font-weight="800" fill="#0d6efd">Approval per Document</text>
+<text x="74" y="602" font-family="Arial" font-size="12" fill="#13232b">- Admin approve/reject tiap document, bukan hanya</text>
+<text x="74" y="617" font-family="Arial" font-size="12" fill="#13232b">  per activity.</text>
+<text x="74" y="640" font-family="Arial" font-size="12" fill="#13232b">- Rejected document wajib memiliki note agar</text>
+<text x="74" y="655" font-family="Arial" font-size="12" fill="#13232b">  requester tahu koreksinya.</text>
+<rect x="396" y="540" width="330" height="136" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="396" y="540" width="8" height="136" rx="4" fill="#1f7a68"/>
+<text x="422" y="572" font-family="Arial" font-size="16" font-weight="800" fill="#1f7a68">Accepted Tetap Aman</text>
+<text x="422" y="602" font-family="Arial" font-size="12" fill="#13232b">- Document yang sudah approved tidak perlu</text>
+<text x="422" y="617" font-family="Arial" font-size="12" fill="#13232b">  diupload ulang.</text>
+<text x="422" y="640" font-family="Arial" font-size="12" fill="#13232b">- Requester hanya diminta mengganti document yang</text>
+<text x="422" y="655" font-family="Arial" font-size="12" fill="#13232b">  rejected/missing.</text>
+<rect x="744" y="540" width="330" height="136" rx="16" fill="#ffffff" stroke="#d5e0dd" filter="url(#shadow)"/>
+<rect x="744" y="540" width="8" height="136" rx="4" fill="#a4510f"/>
+<text x="770" y="572" font-family="Arial" font-size="16" font-weight="800" fill="#a4510f">Rollback Stage Lama</text>
+<text x="770" y="602" font-family="Arial" font-size="12" fill="#13232b">- Jika stage lama direject, stage setelahnya</text>
+<text x="770" y="617" font-family="Arial" font-size="12" fill="#13232b">  di-reset.</text>
+<text x="770" y="640" font-family="Arial" font-size="12" fill="#13232b">- Dokumen accepted di stage yang direview tetap</text>
+<text x="770" y="655" font-family="Arial" font-size="12" fill="#13232b">  dipertahankan.</text>
+<text x="562" y="740" text-anchor="middle" font-family="Arial" font-size="12" fill="#60727e">Output akhir: entry complete + seluruh dokumen dapat didownload sebagai ZIP terstruktur per Stage / Activity / Document.</text>
+</svg>

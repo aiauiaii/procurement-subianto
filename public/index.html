@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Procurement Workflow</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen">
+      <form id="loginForm" class="login-panel">
+        <div>
+          <h1>Procurement Workflow</h1>
+          <p>Sign in with your assigned role.</p>
+        </div>
+        <label>
+          Login as
+          <select id="loginRole" name="role">
+            <option value="requester">Requester</option>
+            <option value="admin">Procurement Admin</option>
+          </select>
+        </label>
+        <label>
+          Email
+          <input id="loginEmail" name="email" type="email" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Log in</button>
+        <div class="preset-logins">
+          <button type="button" class="ghost compact" data-login-preset="requester">Use requester demo</button>
+          <button type="button" class="ghost compact" data-login-preset="admin">Use admin demo</button>
+        </div>
+        <p class="meta">Requester: requester@procurement.local / requester123</p>
+        <p class="meta">Admin: admin@procurement.local / admin123</p>
+      </form>
+    </section>
+
+    <div id="appShell" hidden>
+      <header class="topbar">
+        <div>
+          <h1>Procurement Workflow</h1>
+          <p id="workflowSummary">Loading workflow</p>
+        </div>
+        <div class="top-actions">
+          <nav class="tabs" aria-label="Primary">
+            <button class="tab is-active" data-tab="submitter">Submitter</button>
+            <button class="tab" data-tab="admin-dashboard">Dashboard</button>
+            <button class="tab" data-tab="admin-workflow">Workflow Builder</button>
+            <button class="tab" data-tab="admin-users">Accounts</button>
+          </nav>
+          <div class="account">
+            <span id="userBadge"></span>
+            <button id="logoutButton" class="ghost compact">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section id="submitter" class="view is-active">
+          <div class="workspace submitter-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Entry</h2>
+                <button id="refreshSubmitter" class="ghost">Refresh</button>
+              </div>
+              <form id="entryForm" class="stack">
+                <label>
+                  Procurement title
+                  <input id="entryTitle" name="title" type="text" required>
+                </label>
+                <button type="submit">Create entry</button>
+              </form>
+
+              <div class="entry-picker">
+                <label>
+                  Active entry
+                  <select id="entrySelect"></select>
+                </label>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h2 id="currentLevelTitle">Current Stage</h2>
+                <span id="entryStatus" class="status">No entry</span>
+              </div>
+              <form id="submissionForm" class="level-form" novalidate></form>
+            </section>
+          </div>
+        </section>
+
+        <section id="admin-dashboard" class="view">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Dashboard</h2>
+              <button id="refreshAdmin" class="ghost">Refresh</button>
+            </div>
+            <div id="adminEntries" class="entry-list"></div>
+          </section>
+        </section>
+
+        <section id="admin-workflow" class="view">
+          <section class="panel">
+            <div class="panel-head">
+              <div class="panel-title-actions">
+                <h2>Workflow Builder</h2>
+                <button id="saveWorkflow" class="compact">Save Changes</button>
+              </div>
+              <button id="addLevel1" class="ghost">Add Stage</button>
+            </div>
+            <div id="workflowBuilder" class="builder"></div>
+          </section>
+        </section>
+
+        <section id="admin-users" class="view">
+          <div class="accounts-layout">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Accounts</h2>
+                <button id="refreshUsers" class="ghost">Refresh</button>
+              </div>
+              <div id="adminUsers" class="user-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Create Account</h2>
+              </div>
+              <form id="userForm" class="stack">
+                <label>
+                  Name
+                  <input id="newUserName" type="text" required>
+                </label>
+                <label>
+                  Email
+                  <input id="newUserEmail" type="email" required>
+                </label>
+                <label>
+                  Notification email
+                  <input id="newUserNotificationEmail" type="email" placeholder="Defaults to account email">
+                </label>
+                <label>
+                  Role
+                  <select id="newUserRole">
+                    <option value="requester">Requester</option>
+                    <option value="admin">Procurement Admin</option>
+                  </select>
+                </label>
+                <label class="inline-check">
+                  <input id="newUserEmailNotifications" type="checkbox" checked>
+                  Email notifications
+                </label>
+                <label>
+                  Temporary password
+                  <input id="newUserPassword" type="password" minlength="6" required>
+                </label>
+                <button type="submit">Create account</button>
+              </form>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="confirmModal" class="modal-backdrop" hidden>
+      <section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+        <h2 id="confirmModalTitle">Delete entry permanently</h2>
+        <p id="confirmModalText"></p>
+        <label>
+          Type yes to confirm
+          <input id="confirmModalInput" type="text" autocomplete="off">
+        </label>
+        <div class="modal-actions">
+          <button id="confirmModalCancel" type="button" class="ghost compact">Cancel</button>
+          <button id="confirmModalConfirm" type="button" class="danger compact" disabled>Delete permanently</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

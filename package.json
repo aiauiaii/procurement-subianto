@@ -1,0 +1,12 @@
+{
+  "name": "procurement-workflow",
+  "version": "1.0.0",
+  "description": "Configurable procurement workflow with admin approvals and document uploads.",
+  "type": "module",
+  "scripts": {
+    "start": "node --no-warnings server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

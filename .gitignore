@@ -1,0 +1,8 @@
+data/
+node_modules/
+.env
+ngrok/
+ngrok.zip
+server.out.log
+server.err.log
+.DS_Store

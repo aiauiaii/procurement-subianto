@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1123" height="794" viewBox="0 0 1123 794">
+<rect width="1123" height="794" fill="#f7faf9"/>
+<text x="561.5" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="800" fill="#172026">Procurement Stage, Activity, dan Required Document</text>
+<text x="561.5" y="64" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#566b78">Peta konteks proses pengadaan dari Stage 1 sampai Stage 7 berdasarkan workflow aktif</text>
+<rect x="38" y="94" width="1047" height="462" rx="12" fill="#ffffff" stroke="#d4dfdc"/>
+<rect x="38" y="94" width="1047" height="35" rx="12" fill="#1f7a68"/>
+<rect x="38" y="114" width="1047" height="15" fill="#1f7a68"/>
+<text x="50" y="117" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#fff">Stage</text>
+<text x="222" y="117" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#fff">Konteks / Tujuan</text>
+<line x1="210" y1="94" x2="210" y2="556" stroke="#d4dfdc"/>
+<text x="479" y="117" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#fff">Activity</text>
+<line x1="467" y1="94" x2="467" y2="556" stroke="#d4dfdc"/>
+<text x="779" y="117" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#fff">Required Document</text>
+<line x1="767" y1="94" x2="767" y2="556" stroke="#d4dfdc"/>
+<line x1="38" y1="129" x2="1085" y2="129" stroke="#d4dfdc"/>
+<text x="50" y="146" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 1</text>
+<text x="50" y="159" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Perencanaan &amp; Inisiasi</text>
+<text x="222" y="146" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Menetapkan kebutuhan, dasar anggaran, dan</text>
+<text x="222" y="159" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">permintaan pembelian sebelum proses pengadaan</text>
+<text x="222" y="172" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">dimulai.</text>
+<text x="479" y="146" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Procurement Planning</text>
+<text x="479" y="159" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Purchase Request</text>
+<text x="779" y="146" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Procurement Planning: Dokumen Rencana Pengadaan, Feasibility</text>
+<text x="779" y="159" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Study, RKAP/RJPP</text>
+<text x="779" y="172" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Purchase Request: Purchase Request Document</text>
+<rect x="38" y="190" width="1047" height="61" fill="#fbfdfc"/>
+<line x1="38" y1="190" x2="1085" y2="190" stroke="#d4dfdc"/>
+<text x="50" y="207" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 2</text>
+<text x="50" y="220" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Persiapan Pengadaan</text>
+<text x="222" y="207" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Menyiapkan tim, ruang lingkup, metode, estimasi</text>
+<text x="222" y="220" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">harga, draft kontrak, dan dokumen RFP.</text>
+<text x="479" y="207" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Penetapan Tim Pengadaan</text>
+<text x="479" y="220" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Penyusunan TOR/KAK</text>
+<text x="479" y="233" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">3. Penetapan Metode</text>
+<text x="479" y="246" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">4. Penyusunan Draft Kontrak</text>
+<text x="779" y="207" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penetapan Tim Pengadaan: SK Tim Pengadaan</text>
+<text x="779" y="220" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penyusunan TOR/KAK: Dokumen TOR/KAK</text>
+<text x="779" y="233" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penetapan Metode: Nota Metode Pengadaan</text>
+<text x="779" y="246" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penyusunan Draft Kontrak: Draft Kontrak</text>
+<line x1="38" y1="251" x2="1085" y2="251" stroke="#d4dfdc"/>
+<text x="50" y="268" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 3</text>
+<text x="50" y="281" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Pelaksanaan Tender</text>
+<text x="222" y="268" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Menjalankan tender mulai dari distribusi</text>
+<text x="222" y="281" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">undangan/RFP sampai penerimaan dan pembukaan</text>
+<text x="222" y="294" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">penawaran.</text>
+<text x="479" y="268" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Sourcing Distribusi RFP</text>
+<text x="479" y="281" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Penerimaan Proposal</text>
+<text x="479" y="294" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">3. Pembukaan Penawaran</text>
+<text x="779" y="268" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Sourcing Distribusi RFP: Undangan Tender</text>
+<text x="779" y="281" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penerimaan Proposal: Dokumen Proposal Vendor</text>
+<text x="779" y="294" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Pembukaan Penawaran: Berita Acara Pembukaan Penawaran</text>
+<rect x="38" y="312" width="1047" height="61" fill="#fbfdfc"/>
+<line x1="38" y1="312" x2="1085" y2="312" stroke="#d4dfdc"/>
+<text x="50" y="329" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 4</text>
+<text x="50" y="342" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Evaluasi dan Seleksi</text>
+<text x="50" y="355" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Vendor</text>
+<text x="222" y="329" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Melakukan evaluasi administrasi, teknis,</text>
+<text x="222" y="342" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">klarifikasi, harga, dan menetapkan hasil</text>
+<text x="222" y="355" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">evaluasi vendor.</text>
+<text x="479" y="329" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Evaluasi Administratif</text>
+<text x="479" y="342" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Evaluasi Teknis</text>
+<text x="479" y="355" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">3. Klarifikasi CoQ</text>
+<text x="479" y="368" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">4. Evaluasi Harga</text>
+<text x="779" y="329" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Evaluasi Administratif: Berita Acara Evaluasi Administratif</text>
+<text x="779" y="342" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Evaluasi Teknis: Berita Acara Evaluasi Teknis</text>
+<text x="779" y="355" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Klarifikasi CoQ: Berita Acara Klarifikasi CoQ</text>
+<text x="779" y="368" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Evaluasi Harga: Berita Acara Evaluasi Harga</text>
+<line x1="38" y1="373" x2="1085" y2="373" stroke="#d4dfdc"/>
+<text x="50" y="390" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 5</text>
+<text x="50" y="403" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Persetujuan &amp; Sistem</text>
+<text x="222" y="390" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Meminta dan menyimpan persetujuan hasil tender</text>
+<text x="222" y="403" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">sebelum penunjukan vendor.</text>
+<text x="479" y="390" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Persetujuan Hasil Tender</text>
+<text x="779" y="390" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Persetujuan Hasil Tender: Dokumen Nota Persetujuan</text>
+<rect x="38" y="434" width="1047" height="61" fill="#fbfdfc"/>
+<line x1="38" y1="434" x2="1085" y2="434" stroke="#d4dfdc"/>
+<text x="50" y="451" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 6</text>
+<text x="50" y="464" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Penunjukan &amp; Kontrak</text>
+<text x="222" y="451" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Menunjuk vendor, menyiapkan kontrak/LoI,</text>
+<text x="222" y="464" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">menandatangani kontrak, dan menerbitkan PO.</text>
+<text x="479" y="451" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Surat Penunjukan</text>
+<text x="479" y="464" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Draft Kontrak &amp; LoI</text>
+<text x="479" y="477" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">3. Penandatanganan Kontrak</text>
+<text x="479" y="490" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">4. Purchase Order (PO)</text>
+<text x="779" y="451" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Surat Penunjukan: SPPBJ/LoA</text>
+<text x="779" y="464" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Draft Kontrak &amp; LoI: Draft Kontrak, Letter of Intent (LoI)</text>
+<text x="779" y="477" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Penandatanganan Kontrak: Dokumen Kontrak</text>
+<text x="779" y="490" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Purchase Order (PO): Dokumen Purchase Order (PO)</text>
+<line x1="38" y1="495" x2="1085" y2="495" stroke="#d4dfdc"/>
+<text x="50" y="512" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Stage 7</text>
+<text x="50" y="525" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#135f51">Contract Management</text>
+<text x="222" y="512" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">Mengelola pelaksanaan kontrak sampai</text>
+<text x="222" y="525" font-family="Arial, sans-serif" font-size="10.3" font-weight="400" fill="#172026">inspection, final acceptance, dan serah terima.</text>
+<text x="479" y="512" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">1. Pre-delivery Inspection</text>
+<text x="479" y="525" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">2. Inspection</text>
+<text x="479" y="538" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">3. Final Acceptance</text>
+<text x="479" y="551" font-family="Arial, sans-serif" font-size="10.4" font-weight="400" fill="#172026">4. Serah Terima</text>
+<text x="779" y="512" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Pre-delivery Inspection: Laporan Pre-delivery Inspection</text>
+<text x="779" y="525" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Inspection: Laporan Inspection</text>
+<text x="779" y="538" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Final Acceptance: Berita Acara Final Acceptance</text>
+<text x="779" y="551" font-family="Arial, sans-serif" font-size="9.7" font-weight="400" fill="#172026">Serah Terima: Berita Acara Serah Terima (BAST)</text>
+<rect x="38" y="574" width="1047" height="156" rx="12" fill="#fff7e8" stroke="#ead1a4"/>
+<text x="58" y="603" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="#9a4a0c">Penjelasan konteks procurement</text>
+<circle cx="62" cy="627" r="3.5" fill="#1f7a68"/>
+<text x="76" y="631" font-family="Arial, sans-serif" font-size="12.1" fill="#172026">Stage 1 memastikan kebutuhan pengadaan sudah memiliki dasar rencana, kelayakan, anggaran, dan purchase request.</text>
+<circle cx="62" cy="647" r="3.5" fill="#1f7a68"/>
+<text x="76" y="651" font-family="Arial, sans-serif" font-size="12.1" fill="#172026">Stage 2 adalah fase persiapan tender: tim, TOR/KAK, metode, draft kontrak, OE/HPS, dan RFP harus siap sebelum tender berjalan.</text>
+<circle cx="62" cy="667" r="3.5" fill="#1f7a68"/>
+<text x="76" y="671" font-family="Arial, sans-serif" font-size="12.1" fill="#172026">Stage 3 sampai Stage 4 mencakup pelaksanaan tender dan evaluasi vendor, termasuk proposal, pembukaan penawaran, evaluasi administrasi, teknis, klarifikasi, harga, dan hasil evaluasi.</text>
+<circle cx="62" cy="687" r="3.5" fill="#1f7a68"/>
+<text x="76" y="691" font-family="Arial, sans-serif" font-size="12.1" fill="#172026">Stage 5 sampai Stage 6 mencakup persetujuan hasil tender, penunjukan vendor, finalisasi kontrak/LoI, tanda tangan kontrak, dan PO.</text>
+<circle cx="62" cy="707" r="3.5" fill="#1f7a68"/>
+<text x="76" y="711" font-family="Arial, sans-serif" font-size="12.1" fill="#172026">Stage 7 adalah contract management sampai inspeksi, final acceptance, serah terima, dan arsip final dokumen procurement.</text>
+</svg>

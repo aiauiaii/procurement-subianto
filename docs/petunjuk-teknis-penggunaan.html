@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <title>Petunjuk Teknis Penggunaan Website Procurement Workflow</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 18mm 16mm;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: #17252f;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        line-height: 1.5;
+        background: #ffffff;
+      }
+
+      .cover {
+        min-height: 250mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-left: 8px solid #1f7f68;
+        padding-left: 28px;
+        page-break-after: always;
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: #1f7f68;
+        font-size: 11pt;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        color: #063f34;
+        font-size: 30pt;
+        line-height: 1.15;
+      }
+
+      .subtitle {
+        max-width: 520px;
+        margin: 18px 0 0;
+        color: #455f70;
+        font-size: 13pt;
+      }
+
+      .doc-meta {
+        margin-top: 46px;
+        color: #455f70;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        padding-bottom: 6px;
+        color: #063f34;
+        font-size: 18pt;
+        border-bottom: 2px solid #d7e4e1;
+      }
+
+      h3 {
+        margin: 18px 0 8px;
+        color: #1f7f68;
+        font-size: 13pt;
+      }
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      ul,
+      ol {
+        margin: 0 0 12px 20px;
+        padding: 0;
+      }
+
+      li {
+        margin: 4px 0;
+      }
+
+      section {
+        page-break-inside: avoid;
+        margin-bottom: 18px;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      .box {
+        margin: 12px 0;
+        padding: 12px 14px;
+        background: #eef7f4;
+        border: 1px solid #bfd8d1;
+        border-radius: 6px;
+      }
+
+      .warning {
+        background: #fff2f0;
+        border-color: #e8b9b2;
+        color: #8a1f13;
+      }
+
+      table {
+        width: 100%;
+        margin: 10px 0 14px;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #cdd9df;
+      }
+
+      th {
+        color: #063f34;
+        background: #e8f1ef;
+        font-weight: 700;
+      }
+
+      .toc {
+        page-break-after: always;
+      }
+
+      .toc ol {
+        margin-left: 18px;
+      }
+
+      .small {
+        color: #455f70;
+        font-size: 9.5pt;
+      }
+
+      code {
+        padding: 1px 4px;
+        background: #eef2f4;
+        border-radius: 3px;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 9.5pt;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="cover">
+        <p class="eyebrow">Petunjuk Teknis</p>
+        <h1>Penggunaan Website Procurement Workflow</h1>
+        <p class="subtitle">
+          Panduan operasional untuk requester dan procurement admin dalam melakukan pengajuan, unggah dokumen,
+          persetujuan tahap, pengaturan workflow, dan pengelolaan akun.
+        </p>
+        <div class="doc-meta">
+          <p><strong>Aplikasi:</strong> Procurement Workflow</p>
+          <p><strong>Alamat lokal:</strong> <code>http://localhost:3000</code></p>
+          <p><strong>Versi dokumen:</strong> 1.0</p>
+        </div>
+      </section>
+
+      <section class="toc">
+        <h2>Daftar Isi</h2>
+        <ol>
+          <li>Tujuan dan ruang lingkup</li>
+          <li>Peran pengguna</li>
+          <li>Login dan logout</li>
+          <li>Penggunaan sebagai requester</li>
+          <li>Penggunaan sebagai procurement admin</li>
+          <li>Workflow Builder</li>
+          <li>Manajemen akun</li>
+          <li>Struktur penyimpanan dokumen</li>
+          <li>Validasi dan status</li>
+          <li>Troubleshooting singkat</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>1. Tujuan dan Ruang Lingkup</h2>
+        <p>
+          Website Procurement Workflow digunakan untuk mengelola proses pengadaan secara bertahap. Proses disusun
+          menjadi Level 1, Level 2, dan Level 3. Level 1 adalah aktivitas utama, Level 2 adalah sub-aktivitas,
+          sedangkan Level 3 adalah dokumen yang wajib diunggah oleh requester.
+        </p>
+        <div class="box">
+          <strong>Prinsip alur:</strong> requester hanya dapat mengirim satu Level 1 jika seluruh dokumen Level 3 pada
+          Level 1 tersebut sudah diisi. Setelah dikirim, requester menunggu persetujuan admin sebelum dapat lanjut ke
+          Level 1 berikutnya.
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Peran Pengguna</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Peran</th>
+              <th>Fungsi Utama</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Requester</strong></td>
+              <td>Membuat entry pengadaan, mengunggah dokumen wajib, melihat status tiap Level 1, dan mengirim pengajuan.</td>
+            </tr>
+            <tr>
+              <td><strong>Procurement Admin</strong></td>
+              <td>Melihat seluruh entry, menyetujui atau menolak submission, mengatur workflow, dan mengelola akun pengguna.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>3. Login dan Logout</h2>
+        <h3>Login</h3>
+        <ol>
+          <li>Buka website melalui browser.</li>
+          <li>Pilih peran login: <strong>Requester</strong> atau <strong>Procurement Admin</strong>.</li>
+          <li>Masukkan email dan password.</li>
+          <li>Klik tombol login untuk masuk ke dashboard sesuai peran.</li>
+        </ol>
+        <h3>Logout</h3>
+        <ol>
+          <li>Klik tombol <strong>Logout</strong> pada bagian atas aplikasi.</li>
+          <li>Sistem akan menghapus sesi login dan kembali ke halaman login.</li>
+        </ol>
+        <div class="warning box">
+          Jangan membagikan akun admin kepada pengguna lain. Gunakan halaman Accounts untuk membuat akun baru jika ada
+          pengguna yang membutuhkan akses.
+        </div>
+      </section>
+
+      <section class="page-break">
+        <h2>4. Penggunaan sebagai Requester</h2>
+        <h3>Membuat Entry Pengadaan</h3>
+        <ol>
+          <li>Login sebagai requester.</li>
+          <li>Pada bagian entry, isi judul atau nama pengadaan.</li>
+          <li>Klik tombol untuk membuat entry.</li>
+          <li>Pilih entry yang ingin dikerjakan apabila terdapat lebih dari satu entry.</li>
+        </ol>
+
+        <h3>Mengisi Dokumen Level 3</h3>
+        <ol>
+          <li>Lihat status Level 1 pada bagian atas form.</li>
+          <li>Buka Level 1 yang sedang berstatus <strong>In progress</strong>.</li>
+          <li>Untuk setiap Level 2, unggah dokumen pada field Level 3 yang tersedia.</li>
+          <li>Pastikan seluruh field dokumen wajib sudah terisi.</li>
+        </ol>
+
+        <h3>Mengirim Submission</h3>
+        <ol>
+          <li>Setelah semua dokumen wajib diunggah, klik tombol <strong>Submit</strong>.</li>
+          <li>Sistem akan memvalidasi kelengkapan dokumen.</li>
+          <li>Jika ada dokumen kosong, sistem menampilkan daftar dokumen yang masih harus diunggah.</li>
+          <li>Jika berhasil, status Level 1 menjadi menunggu approval admin.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>5. Penggunaan sebagai Procurement Admin</h2>
+        <h3>Dashboard</h3>
+        <p>
+          Dashboard admin menampilkan daftar entry pengadaan dari requester. Admin dapat melihat posisi Level 1 saat ini,
+          status approval, dan detail dokumen yang sudah diunggah.
+        </p>
+        <ol>
+          <li>Login sebagai procurement admin.</li>
+          <li>Buka tab <strong>Dashboard</strong>.</li>
+          <li>Pilih entry yang ingin diperiksa.</li>
+          <li>Lihat dokumen yang diunggah requester.</li>
+          <li>Setujui submission jika dokumen sudah sesuai, atau tolak jika perlu revisi.</li>
+        </ol>
+
+        <h3>Status Entry</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Arti</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Not started</td>
+              <td>Level 1 belum dapat dikerjakan atau belum dimulai.</td>
+            </tr>
+            <tr>
+              <td>In progress</td>
+              <td>Requester sedang mengisi dokumen pada Level 1 tersebut.</td>
+            </tr>
+            <tr>
+              <td>Pending approval</td>
+              <td>Requester sudah submit dan menunggu keputusan admin.</td>
+            </tr>
+            <tr>
+              <td>Approved</td>
+              <td>Admin sudah menyetujui Level 1 dan requester dapat lanjut ke Level 1 berikutnya.</td>
+            </tr>
+            <tr>
+              <td>Rejected</td>
+              <td>Submission ditolak dan requester perlu memperbaiki dokumen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="page-break">
+        <h2>6. Workflow Builder</h2>
+        <p>
+          Workflow Builder digunakan admin untuk mengatur susunan proses pengadaan. Admin dapat menambah, menghapus,
+          mengubah nama, mengubah deskripsi, dan mengatur urutan Level 1, Level 2, serta Level 3.
+        </p>
+
+        <h3>Mengatur Level 1</h3>
+        <ol>
+          <li>Buka tab <strong>Workflow Builder</strong>.</li>
+          <li>Gunakan panel kiri untuk memilih Level 1.</li>
+          <li>Gunakan tombol <strong>Add Level 1</strong> untuk menambah aktivitas utama.</li>
+          <li>Gunakan tombol <strong>Up</strong> atau <strong>Down</strong> untuk mengubah urutan.</li>
+          <li>Klik <strong>Save Changes</strong> di bagian atas halaman untuk menyimpan perubahan.</li>
+        </ol>
+
+        <h3>Mengatur Level 2</h3>
+        <ol>
+          <li>Pilih Level 1 yang akan diedit.</li>
+          <li>Klik <strong>Add Level 2</strong> untuk menambah sub-aktivitas.</li>
+          <li>Isi nama dan deskripsi Level 2.</li>
+          <li>Gunakan tombol hide/show untuk melipat atau membuka isi Level 2.</li>
+          <li>Klik <strong>Save Changes</strong> setelah selesai.</li>
+        </ol>
+
+        <h3>Mengatur Level 3</h3>
+        <ol>
+          <li>Pada Level 2 yang dipilih, klik <strong>Add Level 3</strong>.</li>
+          <li>Isi nama dokumen yang wajib diunggah requester.</li>
+          <li>Susun urutan dokumen sesuai kebutuhan proses.</li>
+          <li>Klik <strong>Save Changes</strong> agar perubahan tersimpan.</li>
+        </ol>
+
+        <div class="box">
+          Perubahan di Workflow Builder tidak otomatis tersimpan. Gunakan tombol <strong>Save Changes</strong> setelah
+          selesai mengedit agar perubahan tidak hilang saat halaman dimuat ulang.
+        </div>
+      </section>
+
+      <section>
+        <h2>7. Manajemen Akun</h2>
+        <p>
+          Halaman <strong>Accounts</strong> digunakan admin untuk melihat dan mengelola seluruh akun yang terdaftar.
+        </p>
+        <h3>Fitur yang Tersedia</h3>
+        <ul>
+          <li>Melihat daftar akun requester dan procurement admin.</li>
+          <li>Membuat akun baru dengan password sementara.</li>
+          <li>Mengubah nama dan email akun.</li>
+          <li>Mengangkat requester menjadi procurement admin.</li>
+          <li>Menurunkan admin menjadi requester.</li>
+          <li>Mengaktifkan atau menonaktifkan akun.</li>
+          <li>Mengganti password akun jika diperlukan.</li>
+        </ul>
+        <div class="warning box">
+          Admin yang sedang login tidak dapat menonaktifkan atau menurunkan role akunnya sendiri. Proteksi ini mencegah
+          admin kehilangan akses secara tidak sengaja.
+        </div>
+      </section>
+
+      <section class="page-break">
+        <h2>8. Struktur Penyimpanan Dokumen</h2>
+        <p>
+          Dokumen yang diunggah disimpan secara terstruktur sesuai hierarki workflow. Struktur folder mengikuti pola:
+        </p>
+        <div class="box">
+          <code>folder_level1s / folder_level2s / folder_level3s / file_dokumen</code>
+        </div>
+        <p>Contoh:</p>
+        <div class="box">
+          <code>data/documents/01_perencanaan/01_requirement-definition/01_terms-of-reference/dokumen.pdf</code>
+        </div>
+        <p>
+          Struktur ini memudahkan pencarian dokumen berdasarkan aktivitas utama, sub-aktivitas, dan jenis dokumen.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Validasi dan Status</h2>
+        <h3>Validasi Requester</h3>
+        <ul>
+          <li>Semua field dokumen wajib harus diisi sebelum submission dapat dikirim.</li>
+          <li>Jika masih ada field kosong, sistem menampilkan pesan dokumen mana yang belum diunggah.</li>
+          <li>Requester tidak dapat lanjut ke Level 1 berikutnya sebelum Level 1 sebelumnya disetujui admin.</li>
+        </ul>
+
+        <h3>Validasi Admin</h3>
+        <ul>
+          <li>Hanya akun dengan role procurement admin yang dapat membuka Dashboard admin, Workflow Builder, dan Accounts.</li>
+          <li>Akun yang dinonaktifkan tidak dapat login.</li>
+          <li>Perubahan role dan status akun dilakukan dari halaman Accounts.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10. Troubleshooting Singkat</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Masalah</th>
+              <th>Solusi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tombol submit tidak berhasil</td>
+              <td>Pastikan semua dokumen Level 3 pada Level 1 aktif sudah diunggah.</td>
+            </tr>
+            <tr>
+              <td>Tidak bisa login</td>
+              <td>Periksa email, password, role login, dan pastikan akun masih aktif.</td>
+            </tr>
+            <tr>
+              <td>Perubahan workflow tidak tersimpan</td>
+              <td>Klik tombol <strong>Save Changes</strong> setelah mengedit workflow.</td>
+            </tr>
+            <tr>
+              <td>Port 3000 sudah digunakan</td>
+              <td>Tutup proses server lama atau jalankan aplikasi pada port lain.</td>
+            </tr>
+            <tr>
+              <td>Ngrok tidak dikenali</td>
+              <td>Gunakan path lengkap <code>ngrok/ngrok.exe http 3000</code> atau tambahkan ngrok ke PATH Windows.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="small">
+          Dokumen ini dapat diperbarui jika alur aplikasi, role pengguna, atau kebijakan dokumen berubah.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

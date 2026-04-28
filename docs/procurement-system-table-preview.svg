@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1123" height="794" viewBox="0 0 1123 794">
+<rect width="1123" height="794" fill="#f7faf9"/>
+<text x="561.5" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="800" fill="#172026">Alur Sistem Procurement Website</text>
+<text x="561.5" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#526675">Ringkasan proses requester, approval admin per document, rollback, dan arsip ZIP final</text>
+<rect x="46" y="96" width="1031" height="506" rx="12" fill="#ffffff" stroke="#cad8d5"/>
+<rect x="46" y="96" width="1031" height="42" rx="12" fill="#1f7a68"/>
+<rect x="46" y="120" width="1031" height="18" fill="#1f7a68"/>
+<text x="58" y="123" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#ffffff">Tahap</text>
+<text x="174" y="123" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#ffffff">Requester</text>
+<line x1="162" y1="96" x2="162" y2="602" stroke="#cad8d5"/>
+<text x="409" y="123" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#ffffff">Sistem / Database</text>
+<line x1="397" y1="96" x2="397" y2="602" stroke="#cad8d5"/>
+<text x="679" y="123" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#ffffff">Procurement Admin</text>
+<line x1="667" y1="96" x2="667" y2="602" stroke="#cad8d5"/>
+<text x="914" y="123" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#ffffff">Output</text>
+<line x1="902" y1="96" x2="902" y2="602" stroke="#cad8d5"/>
+<line x1="46" y1="138" x2="1077" y2="138" stroke="#cad8d5"/>
+<text x="57" y="157" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">1. Login</text>
+<text x="173" y="157" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Masuk sebagai requester untuk membuat</text>
+<text x="173" y="172" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">dan memantau pengadaan.</text>
+<text x="408" y="157" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Mengecek akun, role, status aktif, dan session</text>
+<text x="408" y="172" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">login.</text>
+<text x="678" y="157" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Masuk sebagai procurement admin untuk</text>
+<text x="678" y="172" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">monitoring dan approval.</text>
+<text x="913" y="157" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">User masuk ke dashboard</text>
+<text x="913" y="172" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">sesuai role.</text>
+<rect x="46" y="196" width="1031" height="58" fill="#fbfdfc"/>
+<line x1="46" y1="196" x2="1077" y2="196" stroke="#cad8d5"/>
+<text x="57" y="215" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">2. Buat Entry</text>
+<text x="173" y="215" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Membuat entry procurement baru dan</text>
+<text x="173" y="230" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">mulai dari Stage 1.</text>
+<text x="408" y="215" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Mencatat entry, requester, stage aktif, dan</text>
+<text x="408" y="230" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">status awal.</text>
+<text x="678" y="215" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Melihat entry baru di dashboard admin.</text>
+<text x="913" y="215" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Entry berstatus In progress.</text>
+<line x1="46" y1="254" x2="1077" y2="254" stroke="#cad8d5"/>
+<text x="57" y="273" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">3. Upload</text>
+<text x="57" y="288" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">Document</text>
+<text x="173" y="273" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Mengupload semua document wajib pada</text>
+<text x="173" y="288" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">stage aktif.</text>
+<text x="408" y="273" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Menyimpan file ke folder Stage &gt; Activity &gt;</text>
+<text x="408" y="288" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Document dan metadata ke database.</text>
+<text x="678" y="273" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Belum approve sampai requester submit.</text>
+<text x="913" y="273" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Stage siap direview.</text>
+<rect x="46" y="312" width="1031" height="58" fill="#fbfdfc"/>
+<line x1="46" y1="312" x2="1077" y2="312" stroke="#cad8d5"/>
+<text x="57" y="331" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">4. Submit Stage</text>
+<text x="173" y="331" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Menekan Submit setelah document wajib</text>
+<text x="173" y="346" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">lengkap.</text>
+<text x="408" y="331" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Mengunci stage sementara dan mengubah status</text>
+<text x="408" y="346" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">menjadi Waiting approval.</text>
+<text x="678" y="331" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Entry masuk daftar review.</text>
+<text x="913" y="331" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Requester menunggu approval.</text>
+<line x1="46" y1="370" x2="1077" y2="370" stroke="#cad8d5"/>
+<text x="57" y="389" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">5. Review</text>
+<text x="57" y="404" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">Document</text>
+<text x="173" y="389" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Melihat status document yang diterima</text>
+<text x="173" y="404" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">atau ditolak.</text>
+<text x="408" y="389" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Menyimpan approval per document, reject note,</text>
+<text x="408" y="404" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">reviewer, dan waktu review.</text>
+<text x="678" y="389" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Tick untuk approve, cross untuk reject,</text>
+<text x="678" y="404" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">lalu Save review.</text>
+<text x="913" y="389" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Document bisa approved /</text>
+<text x="913" y="404" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">rejected / pending.</text>
+<rect x="46" y="428" width="1031" height="58" fill="#fbfdfc"/>
+<line x1="46" y1="428" x2="1077" y2="428" stroke="#cad8d5"/>
+<text x="57" y="447" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">6. Jika Rejected</text>
+<text x="173" y="447" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Hanya upload ulang document yang</text>
+<text x="173" y="462" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">rejected atau missing.</text>
+<text x="408" y="447" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Document approved tetap tersimpan. Reject note</text>
+<text x="408" y="462" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">ditampilkan ke requester.</text>
+<text x="678" y="447" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Bisa reject ulang stage lama; stage</text>
+<text x="678" y="462" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">setelahnya di-reset sesuai aturan</text>
+<text x="678" y="477" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">rollback.</text>
+<text x="913" y="447" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">User mendapat notice</text>
+<text x="913" y="462" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">koreksi.</text>
+<line x1="46" y1="486" x2="1077" y2="486" stroke="#cad8d5"/>
+<text x="57" y="505" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">7. Jika Approved</text>
+<text x="173" y="505" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Melanjutkan stage berikutnya saat semua</text>
+<text x="173" y="520" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">document di stage approved.</text>
+<text x="408" y="505" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Membuka stage berikutnya otomatis. Jika Stage</text>
+<text x="408" y="520" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">7 selesai, entry menjadi Complete.</text>
+<text x="678" y="505" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Dashboard menampilkan progress sampai</text>
+<text x="678" y="520" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">complete.</text>
+<text x="913" y="505" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Pengadaan selesai.</text>
+<rect x="46" y="544" width="1031" height="58" fill="#fbfdfc"/>
+<line x1="46" y1="544" x2="1077" y2="544" stroke="#cad8d5"/>
+<text x="57" y="563" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#1f7a68">8. Download ZIP</text>
+<text x="173" y="563" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Setelah complete, download semua</text>
+<text x="173" y="578" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">document sebagai ZIP.</text>
+<text x="408" y="563" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Membuat ZIP berstruktur Stage &gt; Activity &gt;</text>
+<text x="408" y="578" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Document.</text>
+<text x="678" y="563" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Admin juga bisa download ZIP dari</text>
+<text x="678" y="578" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">dashboard complete entry.</text>
+<text x="913" y="563" font-family="Arial, sans-serif" font-size="11.2" font-weight="400" fill="#172026">Arsip dokumen final rapi.</text>
+<rect x="46" y="620" width="1031" height="128" rx="12" fill="#fff7e8" stroke="#ead1a4"/>
+<text x="64" y="648" font-family="Arial, sans-serif" font-size="15" font-weight="800" fill="#a4490d">Penjelasan singkat</text>
+<circle cx="68" cy="672" r="3.5" fill="#1f7a68"/>
+<text x="82" y="676" font-family="Arial, sans-serif" font-size="12" fill="#172026">Setiap stage berisi beberapa activity, dan setiap activity berisi beberapa document wajib.</text>
+<circle cx="68" cy="688" r="3.5" fill="#1f7a68"/>
+<text x="82" y="692" font-family="Arial, sans-serif" font-size="12" fill="#172026">Approval dilakukan per document, bukan per activity. Satu document rejected tidak otomatis membuat document lain rejected.</text>
+<circle cx="68" cy="704" r="3.5" fill="#1f7a68"/>
+<text x="82" y="708" font-family="Arial, sans-serif" font-size="12" fill="#172026">Document yang sudah approved tetap disimpan. Requester hanya diminta mengganti document yang rejected atau belum lengkap.</text>
+<circle cx="68" cy="720" r="3.5" fill="#1f7a68"/>
+<text x="82" y="724" font-family="Arial, sans-serif" font-size="12" fill="#172026">Jika admin membatalkan approval pada stage lama, stage setelahnya di-reset agar proses berjalan ulang dari titik koreksi.</text>
+<circle cx="68" cy="736" r="3.5" fill="#1f7a68"/>
+<text x="82" y="740" font-family="Arial, sans-serif" font-size="12" fill="#172026">Saat seluruh document pada Stage 7 approved, entry menjadi Complete dan tombol Download ZIP tersedia untuk requester dan admin.</text>
+</svg>

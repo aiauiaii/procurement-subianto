@@ -1,0 +1,270 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 9617 >>
+stream
+1.000 1.000 1.000 rg
+0.00 0.00 842.00 595.00 re f
+0.027 0.361 0.314 rg
+BT /F2 18.20 Tf 13.93 567.00 Td (Procurement Stage, Activity, dan Required Document) Tj ET
+0.129 0.192 0.227 rg
+BT /F1 9.80 Tf 13.93 548.80 Td (Peta konteks proses pengadaan dari Stage 1 sampai Stage 7 berdasarkan workflow aktif.) Tj ET
+1.000 1.000 1.000 rg
+0.812 0.863 0.847 RG
+13.93 25.20 814.15 505.40 re B
+0.129 0.482 0.408 rg
+13.93 495.60 814.15 35.00 re f
+1.000 1.000 1.000 rg
+BT /F2 12.60 Tf 23.57 508.20 Td (Stage) Tj ET
+1.000 1.000 1.000 rg
+BT /F2 12.60 Tf 160.15 508.20 Td (Konteks / Tujuan) Tj ET
+0.812 0.863 0.847 RG
+150.51 530.60 m 150.51 25.20 l S
+1.000 1.000 1.000 rg
+BT /F2 12.60 Tf 369.04 508.20 Td (Activity) Tj ET
+0.812 0.863 0.847 RG
+359.40 530.60 m 359.40 25.20 l S
+1.000 1.000 1.000 rg
+BT /F2 12.60 Tf 607.40 508.20 Td (Required Document) Tj ET
+0.812 0.863 0.847 RG
+597.76 530.60 m 597.76 25.20 l S
+1.000 1.000 1.000 rg
+13.93 428.40 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 495.60 m 828.07 495.60 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 476.70 Td (Stage 1) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 458.35 Td (Perencanaan &) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 440.00 Td (Inisiasi) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 476.70 Td (Menetapkan kebutuhan, dasar anggaran,) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 460.70 Td (dan permintaan pembelian sebelum) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 444.70 Td (proses pengadaan dimulai.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 476.70 Td (1. Procurement Planning) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 460.96 Td (2. Purchase Request) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 476.70 Td (Procurement Planning: Dokumen Rencana Pengadaan,) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 462.33 Td (Feasibility Study, RKAP/RJPP) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 447.97 Td (Purchase Request: Purchase Request Document) Tj ET
+0.973 0.984 0.980 rg
+13.93 361.20 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 428.40 m 828.07 428.40 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 409.50 Td (Stage 2) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 391.15 Td (Persiapan Pengadaan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 409.50 Td (Menyiapkan tim, ruang lingkup, metode,) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 393.50 Td (estimasi harga, draft kontrak, dan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 377.50 Td (dokumen RFP.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 409.50 Td (1. Penetapan Tim Pengadaan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 393.76 Td (2. Penyusunan TOR/KAK) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 378.02 Td (3. Penetapan Metode) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 362.29 Td (4. Penyusunan Draft Kontrak) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 346.55 Td (5. Penyusunan OE/HPS) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 409.50 Td (Penetapan Tim Pengadaan: SK Tim Pengadaan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 395.13 Td (Penyusunan TOR/KAK: Dokumen TOR/KAK) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 380.77 Td (Penetapan Metode: Nota Metode Pengadaan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 366.40 Td (Penyusunan Draft Kontrak: Draft Kontrak) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 352.04 Td (Penyusunan OE/HPS: Dokumen OE/HPS) Tj ET
+1.000 1.000 1.000 rg
+13.93 294.00 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 361.20 m 828.07 361.20 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 342.30 Td (Stage 3) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 323.95 Td (Pelaksanaan Tender) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 342.30 Td (Menjalankan tender mulai dari) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 326.30 Td (distribusi undangan/RFP sampai) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 310.30 Td (penerimaan dan pembukaan penawaran.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 342.30 Td (1. Sourcing Distribusi RFP) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 326.56 Td (2. Penerimaan Proposal) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 310.82 Td (3. Pembukaan Penawaran) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 342.30 Td (Sourcing Distribusi RFP: Undangan Tender) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 327.93 Td (Penerimaan Proposal: Dokumen Proposal Vendor) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 313.57 Td (Pembukaan Penawaran: Berita Acara Pembukaan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 299.20 Td (Penawaran) Tj ET
+0.973 0.984 0.980 rg
+13.93 226.80 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 294.00 m 828.07 294.00 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 275.10 Td (Stage 4) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 256.75 Td (Evaluasi dan Seleksi) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 238.40 Td (Vendor) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 275.10 Td (Melakukan evaluasi administrasi,) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 259.10 Td (teknis, klarifikasi, harga, dan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 243.10 Td (menetapkan hasil evaluasi vendor.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 275.10 Td (1. Evaluasi Administratif) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 259.36 Td (2. Evaluasi Teknis) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 243.62 Td (3. Klarifikasi CoQ) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 227.89 Td (4. Evaluasi Harga) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 212.15 Td (5. Dokumen Hasil Evaluasi) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 275.10 Td (Evaluasi Administratif: Berita Acara Evaluasi) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 260.73 Td (Administratif) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 246.37 Td (Evaluasi Teknis: Berita Acara Evaluasi Teknis) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 232.00 Td (Klarifikasi CoQ: Berita Acara Klarifikasi CoQ) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 217.64 Td (Evaluasi Harga: Berita Acara Evaluasi Harga) Tj ET
+1.000 1.000 1.000 rg
+13.93 159.60 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 226.80 m 828.07 226.80 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 207.90 Td (Stage 5) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 189.55 Td (Persetujuan & Sistem) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 207.90 Td (Meminta dan menyimpan persetujuan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 191.90 Td (hasil tender sebelum penunjukan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 175.90 Td (vendor.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 207.90 Td (1. Persetujuan Hasil Tender) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 207.90 Td (Persetujuan Hasil Tender: Dokumen Nota) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 193.53 Td (Persetujuan) Tj ET
+0.973 0.984 0.980 rg
+13.93 92.40 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 159.60 m 828.07 159.60 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 140.70 Td (Stage 6) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 122.35 Td (Penunjukan & Kontrak) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 140.70 Td (Menunjuk vendor, menyiapkan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 124.70 Td (kontrak/LoI, menandatangani kontrak,) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 108.70 Td (dan menerbitkan PO.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 140.70 Td (1. Surat Penunjukan) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 124.96 Td (2. Draft Kontrak & LoI) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 109.22 Td (3. Penandatanganan Kontrak) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 93.49 Td (4. Purchase Order \(PO\)) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 140.70 Td (Surat Penunjukan: SPPBJ/LoA) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 126.33 Td (Draft Kontrak & LoI: Draft Kontrak, Letter of) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 111.97 Td (Intent \(LoI\)) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 97.60 Td (Penandatanganan Kontrak: Dokumen Kontrak) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 83.24 Td (Purchase Order \(PO\): Dokumen Purchase Order \(PO\)) Tj ET
+1.000 1.000 1.000 rg
+13.93 25.20 814.15 67.20 re f
+0.812 0.863 0.847 RG
+13.93 92.40 m 828.07 92.40 l S
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 73.50 Td (Stage 7) Tj ET
+0.027 0.361 0.314 rg
+BT /F2 11.90 Tf 23.57 55.15 Td (Contract Management) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 73.50 Td (Mengelola pelaksanaan kontrak sampai) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 57.50 Td (inspeksi, final acceptance, dan serah) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 10.10 Tf 160.15 41.50 Td (terima.) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 73.50 Td (1. Pre-delivery Inspection) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 57.76 Td (2. Inspection) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 42.02 Td (3. Final Acceptance) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 9.90 Tf 369.04 26.29 Td (4. Serah Terima) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 73.50 Td (Pre-delivery Inspection: Laporan Pre-delivery) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 59.13 Td (Inspection) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 44.77 Td (Inspection: Laporan Inspection) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 30.40 Td (Final Acceptance: Berita Acara Final Acceptance) Tj ET
+0.000 0.000 0.000 rg
+BT /F1 8.85 Tf 607.40 16.04 Td (Serah Terima: Berita Acara Serah Terima \(BAST\)) Tj ET
+0.812 0.863 0.847 RG
+13.93 25.20 m 828.07 25.20 l S
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+10065
+%%EOF
