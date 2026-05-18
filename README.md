@@ -130,11 +130,11 @@ Ngrok is a public tunnel to your local app. It is not the app server itself, so 
 Start the app from the project folder:
 
 ```powershell
-cd C:\Users\nerha\Downloads\procurement
+cd C:\path\to\procurement
 npm.cmd start
 ```
 
-If you see an error like `Could not read package.json`, PowerShell is probably in the wrong folder. Make sure the prompt is inside `C:\Users\nerha\Downloads\procurement`, not another folder such as `C:\Users\nerha\Downloads\hariro`.
+If you see an error like `Could not read package.json`, PowerShell is probably in the wrong folder. Make sure the prompt is inside the project folder that contains `package.json`.
 
 In a second PowerShell window, start ngrok:
 
@@ -272,7 +272,7 @@ Could not read package.json
 Run from the project folder:
 
 ```powershell
-cd C:\Users\nerha\Downloads\procurement
+cd C:\path\to\procurement
 npm.cmd start
 ```
 
