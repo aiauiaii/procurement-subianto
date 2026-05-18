@@ -78,6 +78,57 @@ Then open:
 http://localhost:3000
 ```
 
+## Ngrok Demo Link
+
+Ngrok is a public tunnel to your local app. It is not the app server itself, so the local Node server must stay running while ngrok is running.
+
+Start the app from the project folder:
+
+```powershell
+cd C:\Users\nerha\Downloads\procurement
+npm.cmd start
+```
+
+If you see an error like `Could not read package.json`, PowerShell is probably in the wrong folder. Make sure the prompt is inside `C:\Users\nerha\Downloads\procurement`, not another folder such as `C:\Users\nerha\Downloads\hariro`.
+
+In a second PowerShell window, start ngrok:
+
+```powershell
+ngrok http 3000
+```
+
+If `ngrok` is not recognized but you downloaded ngrok inside this project, run:
+
+```powershell
+.\ngrok\ngrok.exe http 3000
+```
+
+Copy the HTTPS `Forwarding` URL from ngrok, for example:
+
+```text
+https://example-name.ngrok-free.app
+```
+
+For demo email links, update `.env` so `APP_URL` uses that ngrok URL:
+
+```env
+APP_URL=https://example-name.ngrok-free.app
+```
+
+After changing `.env`, stop and restart the local server with `npm.cmd start`.
+
+Ngrok notes:
+
+- Free ngrok URLs usually change every time ngrok is restarted.
+- Keep both terminals open: one for `npm.cmd start`, one for `ngrok http 3000`.
+- If ngrok says the authtoken is invalid, add the real token from the ngrok dashboard:
+
+```powershell
+ngrok config add-authtoken YOUR_REAL_NGROK_TOKEN
+```
+
+- If Chrome shows a Fortinet certificate warning, the network or computer security proxy may be blocking the tunnel certificate. Ask IT to check the Fortinet certificate setup or try a different network.
+
 ## Demo Logins
 
 Requester:

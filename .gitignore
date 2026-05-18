@@ -5,4 +5,6 @@ ngrok/
 ngrok.zip
 server.out.log
 server.err.log
+server-output.log
+server-error.log
 .DS_Store
