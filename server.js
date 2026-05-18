@@ -785,6 +785,14 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  const saveMatch = pathname.match(/^\/api\/entries\/(\d+)\/save-level$/);
+  if (saveMatch && req.method === 'POST') {
+    requireUser(user, 'requester');
+    const result = await saveCurrentLevelDraft(req, Number(saveMatch[1]), user);
+    sendJson(res, 200, { ok: true, savedFiles: result.savedFiles });
+    return;
+  }
+
   const approvalMatch = pathname.match(/^\/api\/admin\/entries\/(\d+)\/(approve|reject)$/);
   if (approvalMatch && req.method === 'POST') {
     requireUser(user, 'admin');
@@ -883,12 +891,22 @@ function getEntries(user, options = {}) {
     ORDER BY e.updated_at DESC, e.id DESC
   `).all(...params);
 
+  const entryIds = rows.map((row) => row.id);
+  const statuses = entryIds.length
+    ? db.prepare(`SELECT * FROM entry_level_statuses WHERE entry_id IN (${entryIds.map(() => '?').join(', ')})`).all(...entryIds)
+    : [];
+  const workflow = getWorkflow();
+
   return rows.map((row) => ({
     ...row,
     isArchived: Boolean(row.archived_at),
     archivedAt: row.archived_at || null,
     archivedBy: row.archived_by || null,
-    statusLabel: statusLabel(row.status)
+    statusLabel: statusLabel(row.status),
+    levels: workflow.map((level1) => ({
+      ...level1,
+      entryStatus: statuses.find((status) => status.entry_id === row.id && status.level1_id === level1.id) || null
+    }))
   }));
 }
 
@@ -983,7 +1001,28 @@ async function permanentlyDeleteEntry(entryId, confirmation) {
   }
 }
 
+async function deleteDocumentFiles(documents) {
+  for (const document of documents) {
+    const absolutePath = path.resolve(DATA_DIR, document.file_path);
+    if (!absolutePath.startsWith(path.resolve(UPLOAD_ROOT))) continue;
+    try {
+      await unlink(absolutePath);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+}
+
 async function submitCurrentLevel(req, entryId, user) {
+  const result = await saveLevelFiles(req, entryId, user, { submit: true });
+  return getNotificationContext(entryId, result.level.id);
+}
+
+async function saveCurrentLevelDraft(req, entryId, user) {
+  return saveLevelFiles(req, entryId, user, { submit: false });
+}
+
+async function saveLevelFiles(req, entryId, user, { submit }) {
   const entry = db.prepare('SELECT * FROM entries WHERE id = ?').get(entryId);
   if (!entry) throw httpError(404, 'Entry not found');
   assertCanAccessEntry(entry, user);
@@ -1005,62 +1044,91 @@ async function submitCurrentLevel(req, entryId, user) {
     WHERE entry_id = ? AND level1_id = ?
     ORDER BY id DESC
   `).all(entryId, level.id)) {
-    if (!existingDocuments.has(document.level3_id)) existingDocuments.set(document.level3_id, document);
+    const documents = existingDocuments.get(document.level3_id) || [];
+    documents.push(document);
+    existingDocuments.set(document.level3_id, documents);
   }
 
   const formData = await parseFormData(req);
   const files = new Map();
 
   for (const required of requiredDocs) {
-    const value = formData.get(`doc_${required.level3.id}`);
-    const existing = existingDocuments.get(required.level3.id);
-    if (!isUploadedFile(value) && existing?.review_status === 'approved') {
-      continue;
+    const values = formData.getAll(`doc_${required.level3.id}`).filter(isUploadedFile);
+    const existing = existingDocuments.get(required.level3.id) || [];
+    const acceptedOrPending = existing.filter((document) => document.review_status !== 'rejected');
+    const rejected = existing.filter((document) => document.review_status === 'rejected');
+    if (submit && rejected.length > 0 && values.length === 0) {
+      throw httpError(400, `Missing corrected document: ${required.level3.name}`);
     }
-    if (!isUploadedFile(value)) {
+    if (submit && values.length === 0 && acceptedOrPending.length === 0) {
       throw httpError(400, `Missing required document: ${required.level3.name}`);
     }
-    files.set(required.level3.id, value);
+    files.set(required.level3.id, values);
   }
 
   const storedFiles = [];
   for (const required of requiredDocs) {
-    const file = files.get(required.level3.id);
-    if (!file) continue;
-    const stored = await storeFile(file, entryId, required.level1, required.level2, required.level3);
-    storedFiles.push({ required, file, stored });
+    const uploadFiles = files.get(required.level3.id) || [];
+    for (const file of uploadFiles) {
+      const stored = await storeFile(file, entryId, required.level1, required.level2, required.level3);
+      storedFiles.push({ required, file, stored });
+    }
+  }
+
+  const rejectedToReplace = [];
+  for (const required of requiredDocs) {
+    if ((files.get(required.level3.id) || []).length === 0) continue;
+    rejectedToReplace.push(...(existingDocuments.get(required.level3.id) || []).filter((document) => document.review_status === 'rejected'));
   }
 
   withTransaction(() => {
-    db.prepare(`
-      INSERT INTO entry_level_statuses (entry_id, level1_id, status, submitted_at, reviewed_at, reviewed_by, notes)
-      VALUES (?, ?, 'pending', CURRENT_TIMESTAMP, NULL, NULL, '')
-      ON CONFLICT(entry_id, level1_id) DO UPDATE SET
-        status = 'pending',
-        submitted_at = CURRENT_TIMESTAMP,
-        reviewed_at = NULL,
-        reviewed_by = NULL,
-        notes = ''
-    `).run(entryId, level.id);
+    if (submit) {
+      db.prepare(`
+        INSERT INTO entry_level_statuses (entry_id, level1_id, status, submitted_at, reviewed_at, reviewed_by, notes)
+        VALUES (?, ?, 'pending', CURRENT_TIMESTAMP, NULL, NULL, '')
+        ON CONFLICT(entry_id, level1_id) DO UPDATE SET
+          status = 'pending',
+          submitted_at = CURRENT_TIMESTAMP,
+          reviewed_at = NULL,
+          reviewed_by = NULL,
+          notes = ''
+      `).run(entryId, level.id);
 
-    db.prepare(`
-      UPDATE entry_level_statuses
-      SET status = 'pending',
-        reviewed_at = NULL,
-        reviewed_by = NULL,
-        notes = ''
-      WHERE entry_id = ?
-        AND level1_id IN (
-          SELECT id FROM level1s
-          WHERE position > (SELECT position FROM level1s WHERE id = ?)
-        )
-        AND status = 'rejected'
-    `).run(entryId, level.id);
+      db.prepare(`
+        UPDATE entry_level_statuses
+        SET status = 'pending',
+          reviewed_at = NULL,
+          reviewed_by = NULL,
+          notes = ''
+        WHERE entry_id = ?
+          AND level1_id IN (
+            SELECT id FROM level1s
+            WHERE position > (SELECT position FROM level1s WHERE id = ?)
+          )
+          AND status = 'rejected'
+      `).run(entryId, level.id);
 
-    db.prepare('UPDATE entries SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run('awaiting_approval', entryId);
+      db.prepare('UPDATE entries SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run('awaiting_approval', entryId);
+    } else {
+      db.prepare('UPDATE entries SET updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(entryId);
+      if (rejectedToReplace.length > 0) {
+        db.prepare(`
+          INSERT INTO entry_level_statuses (entry_id, level1_id, status, submitted_at, reviewed_at, reviewed_by, notes)
+          VALUES (?, ?, 'in_progress', NULL, NULL, NULL, '')
+          ON CONFLICT(entry_id, level1_id) DO UPDATE SET
+            status = 'in_progress',
+            reviewed_at = NULL,
+            reviewed_by = NULL,
+            notes = ''
+        `).run(entryId, level.id);
+      }
+    }
+
+    for (const document of rejectedToReplace) {
+      db.prepare('DELETE FROM documents WHERE id = ? AND entry_id = ?').run(document.id, entryId);
+    }
 
     for (const { required, file, stored } of storedFiles) {
-      db.prepare('DELETE FROM documents WHERE entry_id = ? AND level1_id = ? AND level3_id = ?').run(entryId, level.id, required.level3.id);
       db.prepare(`
         INSERT INTO documents (entry_id, level1_id, level2_id, level3_id, original_name, stored_name, file_path, mime_type, size)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1078,7 +1146,8 @@ async function submitCurrentLevel(req, entryId, user) {
     }
   });
 
-  return getNotificationContext(entryId, level.id);
+  deleteDocumentFiles(rejectedToReplace).catch((error) => console.error('Failed to delete replaced rejected document:', error.message));
+  return { level, savedFiles: storedFiles.length };
 }
 
 function reviewEntryDocuments(entryId, body, reviewedBy) {
@@ -1139,20 +1208,14 @@ function reconcileEntryReviewState(entryId, reviewedBy) {
   );
 
   if (rejectedLevel) {
-    const entry = db.prepare('SELECT current_level1_id FROM entries WHERE id = ?').get(entryId);
-    const currentLevel = workflow.find((level) => level.id === entry?.current_level1_id) || null;
-    if (currentLevel && currentLevel.position > rejectedLevel.position) {
-      const rollbackLevelIds = workflow
-        .filter((level) => level.position > rejectedLevel.position && level.position <= currentLevel.position)
-        .map((level) => level.id);
-
-      if (rollbackLevelIds.length > 0) {
-        const placeholders = rollbackLevelIds.map(() => '?').join(', ');
-        db.prepare(`DELETE FROM documents WHERE entry_id = ? AND level1_id IN (${placeholders})`).run(entryId, ...rollbackLevelIds);
-        db.prepare(`DELETE FROM entry_level_statuses WHERE entry_id = ? AND level1_id IN (${placeholders})`).run(entryId, ...rollbackLevelIds);
-      }
-    }
-    db.prepare('DELETE FROM entry_level_statuses WHERE entry_id = ? AND level1_id = ?').run(entryId, rejectedLevel.id);
+    db.prepare(`
+      INSERT INTO entry_level_statuses (entry_id, level1_id, status, submitted_at, reviewed_at, reviewed_by, notes)
+      VALUES (?, ?, 'rejected', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, '')
+      ON CONFLICT(entry_id, level1_id) DO UPDATE SET
+        status = 'rejected',
+        reviewed_at = CURRENT_TIMESTAMP,
+        reviewed_by = excluded.reviewed_by
+    `).run(entryId, rejectedLevel.id, reviewedBy);
 
     db.prepare('UPDATE entries SET current_level1_id = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(rejectedLevel.id, 'in_progress', entryId);
     return getNotificationContext(entryId, rejectedLevel.id, 'rejected');
@@ -1170,11 +1233,7 @@ function reconcileEntryReviewState(entryId, reviewedBy) {
 
   for (const level of workflow) {
     if (!levelStatus.has(level.id)) continue;
-    const requiredCount = level.level2s.reduce((sum, level2) => sum + level2.level3s.length, 0);
-    const levelDocuments = documents.filter((document) => document.level1_id === level.id);
-    const approved = requiredCount > 0
-      && levelDocuments.length >= requiredCount
-      && levelDocuments.every((document) => document.review_status === 'approved');
+    const approved = isLevelFullyApproved(level, documents);
     upsertStatus.run(entryId, level.id, approved ? 'approved' : 'pending', approved ? 'approved' : 'pending', approved ? reviewedBy : null);
   }
 
@@ -1192,6 +1251,15 @@ function reconcileEntryReviewState(entryId, reviewedBy) {
   db.prepare('UPDATE entries SET current_level1_id = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(nextLevel.id, entryStatus, entryId);
   const previousApproved = [...workflow].reverse().find((level) => approvedLevelIds.has(level.id));
   return getNotificationContext(entryId, previousApproved?.id || nextLevel.id, 'approved');
+}
+
+function isLevelFullyApproved(level, documents) {
+  const requiredDocs = level.level2s.flatMap((level2) => level2.level3s);
+  if (requiredDocs.length === 0) return false;
+  return requiredDocs.every((level3) => {
+    const slotDocuments = documents.filter((document) => document.level1_id === level.id && document.level3_id === level3.id);
+    return slotDocuments.length > 0 && slotDocuments.every((document) => document.review_status === 'approved');
+  });
 }
 
 function reviewEntry(entryId, action, reviewedBy, notes) {
@@ -1462,7 +1530,7 @@ async function storeFile(file, entryId, level1, level2, level3) {
   );
   await mkdir(folder, { recursive: true });
 
-  const fileName = `${entryId}-${level3.id}-${Date.now()}-${safeFileName(file.name)}`;
+  const fileName = `${entryId}-${level3.id}-${Date.now()}-${randomBytes(4).toString('hex')}-${safeFileName(file.name)}`;
   const absolutePath = path.join(folder, fileName);
   const resolved = path.resolve(absolutePath);
   if (!resolved.startsWith(path.resolve(UPLOAD_ROOT))) {

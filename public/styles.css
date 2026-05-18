@@ -516,6 +516,22 @@ textarea {
   line-height: 1.35;
 }
 
+.doc-file-list {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.1rem 0 0;
+  padding-left: 1rem;
+  color: #43525c;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.doc-file-list span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .doc-row-approved {
   border-radius: 6px;
   background: #f2faf4;
@@ -1005,6 +1021,26 @@ textarea {
   font-weight: 700;
 }
 
+.submit-actions {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.28fr) 1fr;
+  gap: 0.75rem;
+}
+
+.submit-actions button {
+  min-height: 3.4rem;
+}
+
+.secondary-action {
+  border-color: transparent;
+  background: #e4ecea;
+  color: var(--accent-dark);
+}
+
+.secondary-action:hover {
+  background: #d7e4e1;
+}
+
 .submit-feedback {
   padding: 0.75rem 0.85rem;
   border: 1px solid #efcaca;
@@ -1175,6 +1211,10 @@ textarea {
 
   .download-all-docs {
     width: 100%;
+  }
+
+  .submit-actions {
+    grid-template-columns: 1fr;
   }
 
   .builder-level.level-2,

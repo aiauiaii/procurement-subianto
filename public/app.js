@@ -135,43 +135,78 @@ function bindEvents() {
   els.submissionForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!state.selectedEntryId) return;
+    await uploadCurrentLevel('submit');
+  });
 
-    const submitButton = els.submissionForm.querySelector('[data-submit-entry]');
+  els.submissionForm.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-save-draft]');
+    if (!button || !state.selectedEntryId) return;
+    await uploadCurrentLevel('draft');
+  });
+
+  async function uploadCurrentLevel(mode) {
+    const isDraft = mode === 'draft';
+    const actionButton = els.submissionForm.querySelector(isDraft ? '[data-save-draft]' : '[data-submit-entry]');
     const feedback = els.submissionForm.querySelector('[data-submit-feedback]');
     const progress = els.submissionForm.querySelector('[data-submit-progress]');
     setSubmitFeedback(feedback, '');
     setSubmitProgress(progress, 0, false);
     const missingDocuments = missingRequiredDocuments();
-    if (missingDocuments.length > 0) {
-      setSubmitFeedback(feedback, `Please upload: ${missingDocuments.join(', ')}`);
-      const firstMissing = els.submissionForm.querySelector('input[type="file"][required]:not(:disabled)');
-      firstMissing?.focus();
+    if (!isDraft && missingDocuments.length > 0) {
+      if (actionButton) {
+        actionButton.disabled = true;
+        actionButton.textContent = 'Saving draft...';
+      }
+      try {
+        const formData = new FormData(els.submissionForm);
+        await uploadFormWithProgress(`/api/entries/${state.selectedEntryId}/save-level`, formData, (percent) => {
+          setSubmitProgress(progress, percent, true);
+        });
+        setSubmitProgress(progress, 100, true);
+        await refreshEntries();
+        await renderSelectedEntry();
+        const freshFeedback = els.submissionForm.querySelector('[data-submit-feedback]');
+        setSubmitFeedback(freshFeedback, `Draft saved. Upload missing documents before submit: ${missingDocuments.join(', ')}`);
+        const firstMissing = [...els.submissionForm.querySelectorAll('.doc-row input[type="file"]:not(:disabled)')]
+          .find((input) => {
+            const row = input.closest('.doc-row');
+            return (row?.dataset.hasActiveDoc === 'false' || row?.dataset.hasRejectedDoc === 'true') && input.files.length === 0;
+          });
+        firstMissing?.focus();
+      } catch (error) {
+        setSubmitFeedback(feedback, error.message || 'Save failed');
+      } finally {
+        if (actionButton && document.contains(actionButton)) {
+          actionButton.disabled = false;
+          actionButton.textContent = 'Submit';
+        }
+      }
       return;
     }
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Submitting...';
+    if (actionButton) {
+      actionButton.disabled = true;
+      actionButton.textContent = isDraft ? 'Saving...' : 'Submitting...';
     }
 
     try {
       const formData = new FormData(els.submissionForm);
-      await uploadFormWithProgress(`/api/entries/${state.selectedEntryId}/submit-level`, formData, (percent) => {
+      await uploadFormWithProgress(`/api/entries/${state.selectedEntryId}/${isDraft ? 'save-level' : 'submit-level'}`, formData, (percent) => {
         setSubmitProgress(progress, percent, true);
       });
       setSubmitProgress(progress, 100, true);
       await refreshEntries();
       await renderSelectedEntry();
-      toast('Level submitted for approval');
+      toast(isDraft ? 'Draft saved' : 'Stage submitted for approval');
     } catch (error) {
-      setSubmitFeedback(feedback, error.message || 'Submit failed');
+      setSubmitFeedback(feedback, error.message || (isDraft ? 'Save failed' : 'Submit failed'));
     } finally {
-      if (submitButton && document.contains(submitButton)) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit';
+      if (actionButton && document.contains(actionButton)) {
+        actionButton.disabled = false;
+        actionButton.textContent = isDraft ? 'Save Draft' : 'Submit';
       }
     }
-  });
+  }
 
   els.addLevel1?.addEventListener('click', async () => {
     const level1 = await api('/api/admin/workflow/level1', {
@@ -348,16 +383,12 @@ async function renderSelectedEntry() {
   }
 
   const disabled = entry.status === 'awaiting_approval';
-  const currentDocuments = new Map(
-    entry.documents
-      .filter((document) => document.level1_id === level.id)
-      .map((document) => [document.level3_id, document])
-  );
+  const currentDocuments = groupDocumentsByLevel3(entry.documents.filter((document) => document.level1_id === level.id));
   const rows = level.level2s.map((level2) => `
     <section class="subactivity">
       <h3>${escapeHtml(level2.name)}</h3>
       ${level2.description ? `<p class="meta">${escapeHtml(level2.description)}</p>` : ''}
-      ${level2.level3s.length ? level2.level3s.map((level3) => renderRequesterLevel3Row(level3, currentDocuments.get(level3.id), disabled)).join('') : '<div class="empty">No required documents.</div>'}
+      ${level2.level3s.length ? level2.level3s.map((level3) => renderRequesterLevel3Row(level3, currentDocuments.get(level3.id) || [], disabled)).join('') : '<div class="empty">No required documents.</div>'}
     </section>
   `).join('');
 
@@ -367,10 +398,13 @@ async function renderSelectedEntry() {
       ${renderRejectedNotices(entry)}
     <section class="level-block">
       ${level.description ? `<p class="meta">${escapeHtml(level.description)}</p>` : ''}
-      <p class="required-note">Accepted documents are saved. Upload only missing or rejected documents.</p>
+      <p class="required-note">Save Draft can store incomplete documents. Submit sends the stage for approval only after each document has at least one file.</p>
       ${rows || '<div class="empty">No activities.</div>'}
     </section>
-    <button type="submit" data-submit-entry ${disabled ? 'disabled' : ''}>Submit</button>
+    <div class="submit-actions">
+      <button type="button" class="secondary-action" data-save-draft ${disabled ? 'disabled' : ''}>Save Draft</button>
+      <button type="submit" data-submit-entry ${disabled ? 'disabled' : ''}>Submit</button>
+    </div>
     <div class="submit-progress" data-submit-progress hidden>
       <div class="submit-progress-top">
         <span>Uploading documents</span>
@@ -385,29 +419,53 @@ async function renderSelectedEntry() {
   `;
 }
 
-function renderRequesterLevel3Row(level3, document, disabled) {
-  if (document?.review_status === 'approved') {
+function groupDocumentsByLevel3(documents) {
+  const grouped = new Map();
+  for (const document of documents) {
+    const group = grouped.get(document.level3_id) || [];
+    group.push(document);
+    grouped.set(document.level3_id, group);
+  }
+  return grouped;
+}
+
+function renderRequesterLevel3Row(level3, documents, disabled) {
+  const activeDocuments = documents.filter((document) => document.review_status !== 'rejected');
+  const rejectedDocuments = documents.filter((document) => document.review_status === 'rejected');
+  const allActiveApproved = activeDocuments.length > 0 && activeDocuments.every((document) => document.review_status === 'approved');
+  if (allActiveApproved && rejectedDocuments.length === 0) {
     return `
-      <div class="doc-row doc-row-approved">
+      <div class="doc-row doc-row-approved" data-has-active-doc="true" data-has-rejected-doc="false">
         <div class="doc-name">
           <strong>${escapeHtml(level3.name)}</strong>
           ${level3.instructions ? `<small>${escapeHtml(level3.instructions)}</small>` : ''}
-          <small>Accepted file: ${escapeHtml(document.original_name)}</small>
+          ${renderRequesterFileList(activeDocuments, 'Accepted files')}
         </div>
         <span class="doc-state accepted">Accepted</span>
       </div>
     `;
   }
 
+  const hasActiveDoc = activeDocuments.length > 0;
   return `
-    <div class="doc-row ${document?.review_status === 'rejected' ? 'doc-row-rejected' : ''}">
+    <div class="doc-row ${rejectedDocuments.length ? 'doc-row-rejected' : ''}" data-has-active-doc="${hasActiveDoc ? 'true' : 'false'}" data-has-rejected-doc="${rejectedDocuments.length ? 'true' : 'false'}">
       <div class="doc-name">
         <strong>${escapeHtml(level3.name)}</strong>
         ${level3.instructions ? `<small>${escapeHtml(level3.instructions)}</small>` : ''}
-        ${document?.review_status === 'rejected' ? `<small class="doc-inline-reject">Rejected: ${escapeHtml(document.review_notes || 'Please upload a corrected document.')}</small>` : ''}
+        ${activeDocuments.length ? renderRequesterFileList(activeDocuments, 'Saved files') : ''}
+        ${rejectedDocuments.map((document) => `<small class="doc-inline-reject">Rejected: ${escapeHtml(document.original_name)} - ${escapeHtml(document.review_notes || 'Please upload a corrected document.')}</small>`).join('')}
       </div>
-      <input type="file" name="doc_${level3.id}" required ${disabled ? 'disabled' : ''}>
+      <input type="file" name="doc_${level3.id}" multiple ${disabled ? 'disabled' : ''}>
     </div>
+  `;
+}
+
+function renderRequesterFileList(documents, label) {
+  return `
+    <small>${label}:</small>
+    <ul class="doc-file-list">
+      ${documents.map((document) => `<li>${escapeHtml(document.original_name)} <span>${statusLabel(document.review_status)}</span></li>`).join('')}
+    </ul>
   `;
 }
 
@@ -469,17 +527,24 @@ function renderStageProgress(entry) {
 }
 
 function renderEntryStageProgress(entry) {
-  return renderStageStepper(entry, state.workflow, true);
+  return renderStageStepper(entry, entry.levels || state.workflow, true);
 }
 
 function renderStageStepper(entry, levels, compact = false) {
   if (!levels?.length) return '';
   const current = levels.find((level) => level.id === entry.current_level1_id);
   const currentPosition = entry.status === 'complete' ? levels.length + 1 : (current?.position || 1);
-  const completedPosition = entry.status === 'complete' ? levels.length : Math.max(0, currentPosition - 1);
   const activeLevel = current || levels.at(-1);
+  const reachedPosition = entry.status === 'complete'
+    ? levels.length
+    : Math.max(
+      currentPosition,
+      ...levels
+        .filter((level) => level.entryStatus)
+        .map((level) => level.position)
+    );
   const segments = Math.max(1, levels.length - 1);
-  const linePercent = levels.length === 1 ? 100 : Math.max(0, Math.min(100, ((currentPosition - 1) / segments) * 100));
+  const linePercent = levels.length === 1 ? 100 : Math.max(0, Math.min(100, ((reachedPosition - 1) / segments) * 100));
   const lineInset = 50 / levels.length;
 
   return `
@@ -489,7 +554,7 @@ function renderStageStepper(entry, levels, compact = false) {
           <div style="width: ${linePercent}%"></div>
         </div>
         ${levels.map((level) => {
-          const isComplete = level.position <= completedPosition;
+          const isComplete = entry.status === 'complete' || level.entryStatus?.status === 'approved';
           const isCurrent = entry.status !== 'complete' && level.id === activeLevel?.id;
           const stateClass = isComplete ? 'is-complete' : (isCurrent ? 'is-current' : 'is-future');
           return `
@@ -1293,8 +1358,13 @@ function setSubmitProgress(element, percent, visible) {
 }
 
 function missingRequiredDocuments() {
-  return [...els.submissionForm.querySelectorAll('input[type="file"][required]:not(:disabled)')]
-    .filter((input) => input.files.length === 0)
+  return [...els.submissionForm.querySelectorAll('.doc-row input[type="file"]:not(:disabled)')]
+    .filter((input) => {
+      const row = input.closest('.doc-row');
+      const needsFirstFile = row?.dataset.hasActiveDoc === 'false';
+      const needsRejectedReplacement = row?.dataset.hasRejectedDoc === 'true';
+      return (needsFirstFile || needsRejectedReplacement) && input.files.length === 0;
+    })
     .map((input) => input.closest('.doc-row')?.querySelector('.doc-name strong')?.textContent?.trim() || 'required document');
 }
 
