@@ -170,6 +170,7 @@ function bindEvents() {
         const firstMissing = [...els.submissionForm.querySelectorAll('.doc-row input[type="file"]:not(:disabled)')]
           .find((input) => {
             const row = input.closest('.doc-row');
+            if (row?.dataset.isOptional === 'true') return false;
             return (row?.dataset.hasActiveDoc === 'false' || row?.dataset.hasRejectedDoc === 'true') && input.files.length === 0;
           });
         firstMissing?.focus();
@@ -398,13 +399,14 @@ async function renderSelectedEntry() {
       ${renderRejectedNotices(entry)}
     <section class="level-block">
       ${level.description ? `<p class="meta">${escapeHtml(level.description)}</p>` : ''}
-      <p class="required-note">Save Draft can store incomplete documents. Submit sends the stage for approval only after each document has at least one file.</p>
+      <p class="required-note"><span class="required-asterisk" aria-hidden="true">*</span> marks a required document.</p>
       ${rows || '<div class="empty">No activities.</div>'}
     </section>
     <div class="submit-actions">
       <button type="button" class="secondary-action" data-save-draft ${disabled ? 'disabled' : ''}>Save Draft</button>
       <button type="submit" data-submit-entry ${disabled ? 'disabled' : ''}>Submit</button>
     </div>
+    <p class="submit-helper">Save Draft can store incomplete documents. Submit sends the stage for approval only after each required document has at least one file.</p>
     <div class="submit-progress" data-submit-progress hidden>
       <div class="submit-progress-top">
         <span>Uploading documents</span>
@@ -433,11 +435,13 @@ function renderRequesterLevel3Row(level3, documents, disabled) {
   const activeDocuments = documents.filter((document) => document.review_status !== 'rejected');
   const rejectedDocuments = documents.filter((document) => document.review_status === 'rejected');
   const allActiveApproved = activeDocuments.length > 0 && activeDocuments.every((document) => document.review_status === 'approved');
+  const requirementLabel = level3.is_optional ? 'Optional document' : 'Required document';
+  const fileInputLabel = `${requirementLabel}: ${level3.name}`;
   if (allActiveApproved && rejectedDocuments.length === 0) {
     return `
-      <div class="doc-row doc-row-approved" data-has-active-doc="true" data-has-rejected-doc="false">
+      <div class="doc-row doc-row-approved" data-has-active-doc="true" data-has-rejected-doc="false" data-is-optional="${level3.is_optional ? 'true' : 'false'}">
         <div class="doc-name">
-          <strong>${escapeHtml(level3.name)}</strong>
+          <strong aria-label="${escapeAttr(fileInputLabel)}">${escapeHtml(level3.name)}${renderRequiredAsterisk(level3)}</strong>
           ${level3.instructions ? `<small>${escapeHtml(level3.instructions)}</small>` : ''}
           ${renderRequesterFileList(activeDocuments, 'Accepted files')}
         </div>
@@ -448,23 +452,27 @@ function renderRequesterLevel3Row(level3, documents, disabled) {
 
   const hasActiveDoc = activeDocuments.length > 0;
   return `
-    <div class="doc-row ${rejectedDocuments.length ? 'doc-row-rejected' : ''}" data-has-active-doc="${hasActiveDoc ? 'true' : 'false'}" data-has-rejected-doc="${rejectedDocuments.length ? 'true' : 'false'}">
+    <div class="doc-row ${rejectedDocuments.length ? 'doc-row-rejected' : ''}" data-has-active-doc="${hasActiveDoc ? 'true' : 'false'}" data-has-rejected-doc="${rejectedDocuments.length ? 'true' : 'false'}" data-is-optional="${level3.is_optional ? 'true' : 'false'}">
       <div class="doc-name">
-        <strong>${escapeHtml(level3.name)}</strong>
+        <strong aria-label="${escapeAttr(fileInputLabel)}">${escapeHtml(level3.name)}${renderRequiredAsterisk(level3)}</strong>
         ${level3.instructions ? `<small>${escapeHtml(level3.instructions)}</small>` : ''}
         ${activeDocuments.length ? renderRequesterFileList(activeDocuments, 'Saved files') : ''}
         ${rejectedDocuments.map((document) => `<small class="doc-inline-reject">Rejected: ${escapeHtml(document.original_name)} - ${escapeHtml(document.review_notes || 'Please upload a corrected document.')}</small>`).join('')}
       </div>
-      <input type="file" name="doc_${level3.id}" multiple ${disabled ? 'disabled' : ''}>
+      <input type="file" name="doc_${level3.id}" multiple aria-label="${escapeAttr(fileInputLabel)}" ${disabled ? 'disabled' : ''}>
     </div>
   `;
+}
+
+function renderRequiredAsterisk(level3) {
+  return level3.is_optional ? '' : '<span class="required-asterisk" aria-hidden="true">*</span>';
 }
 
 function renderRequesterFileList(documents, label) {
   return `
     <small>${label}:</small>
     <ul class="doc-file-list">
-      ${documents.map((document) => `<li>${escapeHtml(document.original_name)} <span>${statusLabel(document.review_status)}</span></li>`).join('')}
+      ${documents.map((document) => `<li>${document.file_path ? escapeHtml(document.original_name) : 'No file uploaded'} <span>${statusLabel(document.review_status)}</span></li>`).join('')}
     </ul>
   `;
 }
@@ -983,7 +991,9 @@ function renderAdminDocumentsByLevel(entry) {
         ${level.documents.map((document) => `
           <article class="admin-doc-item" data-document-id="${document.id}">
             <div>
-              <a href="/api/documents/${document.id}/download">${escapeHtml(document.original_name)}</a>
+              ${document.file_path
+                ? `<a href="/api/documents/${document.id}/download">${escapeHtml(document.original_name)}</a>`
+                : '<strong>No file uploaded</strong>'}
               <div class="meta">Activity: ${escapeHtml(document.level2_name)} / Document: ${escapeHtml(document.level3_name)}</div>
               ${document.review_notes ? `<div class="doc-review-note">${escapeHtml(document.review_notes)}</div>` : ''}
             </div>
@@ -1108,7 +1118,7 @@ function renderLevel2Group(level2) {
                 moveButton('level3', level3.id, 'down'),
                 actionButton('delete-level3', level3.id, 'Delete', 'danger')
               ])}
-              ${renderLevelFields('level3', level3.id, level3.name, level3.instructions)}
+              ${renderLevelFields('level3', level3.id, level3.name, level3.instructions, Boolean(level3.is_optional))}
             </section>
           `).join('') : '<div class="empty">No documents in this activity.</div>'}
         </div>
@@ -1129,8 +1139,9 @@ function renderBuilderTitle(type, position, name, buttons) {
   `;
 }
 
-function renderLevelFields(type, id, name, detail) {
+function renderLevelFields(type, id, name, detail, isOptional = false) {
   const detailLabel = type === 'level3' ? 'Instructions' : 'Description';
+  const optionalChecked = Boolean(draftValue(type, id, 'optional', isOptional));
   return `
     <div class="builder-fields">
       <label>
@@ -1141,6 +1152,12 @@ function renderLevelFields(type, id, name, detail) {
         ${detailLabel}
         <input data-edit="${type}" data-id="${id}" data-field="detail" value="${escapeAttr(draftValue(type, id, 'detail', detail || ''))}">
       </label>
+      ${type === 'level3' ? `
+      <label class="builder-check">
+        <input data-edit="${type}" data-id="${id}" data-field="optional" type="checkbox" ${optionalChecked ? 'checked' : ''}>
+        Optional document
+      </label>
+      ` : ''}
       <div class="save-hint">Changes are saved only when you press Save Changes at the top.</div>
     </div>
   `;
@@ -1210,7 +1227,7 @@ function wireBuilderButtons() {
       }
       if (action === 'add-level3') {
         state.collapsedLevel2Ids.delete(id);
-        await api('/api/admin/workflow/level3', { method: 'POST', body: { level2Id: id, name: 'Required Document', instructions: '' } });
+        await api('/api/admin/workflow/level3', { method: 'POST', body: { level2Id: id, name: 'Required Document', instructions: '', isOptional: false } });
       }
       if (action === 'expand-all' || action === 'collapse-all') {
         const level1 = state.workflow.find((item) => item.id === id);
@@ -1236,9 +1253,13 @@ function wireBuilderButtons() {
 function wireBuilderDraftInputs() {
   els.workflowBuilder.querySelectorAll('[data-edit]').forEach((field) => {
     field.addEventListener('input', () => {
-      state.workflowDrafts.set(draftKey(field.dataset.edit, Number(field.dataset.id), field.dataset.field), field.value);
+      state.workflowDrafts.set(draftKey(field.dataset.edit, Number(field.dataset.id), field.dataset.field), draftFieldValue(field));
     });
   });
+}
+
+function draftFieldValue(field) {
+  return field.type === 'checkbox' ? field.checked : field.value;
 }
 
 async function saveVisibleWorkflow() {
@@ -1271,7 +1292,7 @@ async function saveVisibleWorkflow() {
 
 function captureVisibleDrafts() {
   els.workflowBuilder.querySelectorAll?.('[data-edit]').forEach((field) => {
-    state.workflowDrafts.set(draftKey(field.dataset.edit, Number(field.dataset.id), field.dataset.field), field.value);
+    state.workflowDrafts.set(draftKey(field.dataset.edit, Number(field.dataset.id), field.dataset.field), draftFieldValue(field));
   });
 }
 
@@ -1287,13 +1308,15 @@ function draftKey(type, id, field) {
 function clearDraftsForItem(type, id) {
   state.workflowDrafts.delete(draftKey(type, id, 'name'));
   state.workflowDrafts.delete(draftKey(type, id, 'detail'));
+  state.workflowDrafts.delete(draftKey(type, id, 'optional'));
 }
 
 async function saveBuilderItem(type, id, refresh = true) {
   const fields = [...els.workflowBuilder.querySelectorAll(`[data-edit="${type}"][data-id="${id}"]`)];
   const name = fields.find((field) => field.dataset.field === 'name')?.value || '';
   const detail = fields.find((field) => field.dataset.field === 'detail')?.value || '';
-  const body = type === 'level3' ? { name, instructions: detail } : { name, description: detail };
+  const optional = fields.find((field) => field.dataset.field === 'optional')?.checked || false;
+  const body = type === 'level3' ? { name, instructions: detail, isOptional: optional } : { name, description: detail };
   await api(`/api/admin/workflow/${type}/${id}`, { method: 'PUT', body });
   if (refresh) {
     await refreshWorkflow();
@@ -1361,6 +1384,7 @@ function missingRequiredDocuments() {
   return [...els.submissionForm.querySelectorAll('.doc-row input[type="file"]:not(:disabled)')]
     .filter((input) => {
       const row = input.closest('.doc-row');
+      if (row?.dataset.isOptional === 'true') return false;
       const needsFirstFile = row?.dataset.hasActiveDoc === 'false';
       const needsRejectedReplacement = row?.dataset.hasRejectedDoc === 'true';
       return (needsFirstFile || needsRejectedReplacement) && input.files.length === 0;

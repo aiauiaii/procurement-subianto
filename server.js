@@ -60,6 +60,7 @@ db.exec(`
     level2_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     instructions TEXT DEFAULT '',
+    is_optional INTEGER NOT NULL DEFAULT 0,
     position INTEGER NOT NULL,
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (level2_id) REFERENCES level2s(id) ON DELETE CASCADE
@@ -208,6 +209,11 @@ function migrateDatabase() {
     db.prepare('ALTER TABLE users ADD COLUMN last_login_at TEXT').run();
   }
   db.prepare("UPDATE users SET notification_email = email WHERE COALESCE(notification_email, '') = ''").run();
+
+  const level3Columns = db.prepare('PRAGMA table_info(level3s)').all().map((column) => column.name);
+  if (!level3Columns.includes('is_optional')) {
+    db.prepare('ALTER TABLE level3s ADD COLUMN is_optional INTEGER NOT NULL DEFAULT 0').run();
+  }
 
   const documentColumns = db.prepare('PRAGMA table_info(documents)').all().map((column) => column.name);
   if (!documentColumns.includes('review_status')) {
@@ -709,7 +715,7 @@ async function handleApi(req, res, url) {
     const level2Id = Number(body.level2Id);
     assertExists('level2s', level2Id, 'Level 2 not found');
     const position = nextPosition('level3s', 'level2_id', level2Id);
-    const result = db.prepare('INSERT INTO level3s (level2_id, name, instructions, position) VALUES (?, ?, ?, ?)').run(level2Id, body.name.trim(), cleanText(body.instructions), position);
+    const result = db.prepare('INSERT INTO level3s (level2_id, name, instructions, is_optional, position) VALUES (?, ?, ?, ?, ?)').run(level2Id, body.name.trim(), cleanText(body.instructions), boolToInt(body.isOptional), position);
     sendJson(res, 201, { id: Number(result.lastInsertRowid) });
     return;
   }
@@ -719,7 +725,7 @@ async function handleApi(req, res, url) {
     requireUser(user, 'admin');
     const body = await parseJson(req);
     requireText(body.name, 'Level 3 document name is required');
-    db.prepare('UPDATE level3s SET name = ?, instructions = ? WHERE id = ?').run(body.name.trim(), cleanText(body.instructions), Number(level3Match[1]));
+    db.prepare('UPDATE level3s SET name = ?, instructions = ?, is_optional = ? WHERE id = ?').run(body.name.trim(), cleanText(body.instructions), boolToInt(body.isOptional), Number(level3Match[1]));
     sendJson(res, 200, { ok: true });
     return;
   }
@@ -1057,18 +1063,26 @@ async function saveLevelFiles(req, entryId, user, { submit }) {
     const existing = existingDocuments.get(required.level3.id) || [];
     const acceptedOrPending = existing.filter((document) => document.review_status !== 'rejected');
     const rejected = existing.filter((document) => document.review_status === 'rejected');
-    if (submit && rejected.length > 0 && values.length === 0) {
+    const isRequired = !required.level3.is_optional;
+    if (submit && isRequired && rejected.length > 0 && values.length === 0) {
       throw httpError(400, `Missing corrected document: ${required.level3.name}`);
     }
-    if (submit && values.length === 0 && acceptedOrPending.length === 0) {
+    if (submit && isRequired && values.length === 0 && acceptedOrPending.length === 0) {
       throw httpError(400, `Missing required document: ${required.level3.name}`);
     }
     files.set(required.level3.id, values);
   }
 
   const storedFiles = [];
+  const emptyOptionalApprovals = [];
   for (const required of requiredDocs) {
     const uploadFiles = files.get(required.level3.id) || [];
+    const existing = existingDocuments.get(required.level3.id) || [];
+    const hasActive = existing.some((document) => document.review_status !== 'rejected');
+    const isOptional = Boolean(required.level3.is_optional);
+    if (submit && isOptional && uploadFiles.length === 0 && !hasActive) {
+      emptyOptionalApprovals.push(required);
+    }
     for (const file of uploadFiles) {
       const stored = await storeFile(file, entryId, required.level1, required.level2, required.level3);
       storedFiles.push({ required, file, stored });
@@ -1077,7 +1091,7 @@ async function saveLevelFiles(req, entryId, user, { submit }) {
 
   const rejectedToReplace = [];
   for (const required of requiredDocs) {
-    if ((files.get(required.level3.id) || []).length === 0) continue;
+    if ((files.get(required.level3.id) || []).length === 0 && !emptyOptionalApprovals.some((item) => item.level3.id === required.level3.id)) continue;
     rejectedToReplace.push(...(existingDocuments.get(required.level3.id) || []).filter((document) => document.review_status === 'rejected'));
   }
 
@@ -1142,6 +1156,19 @@ async function saveLevelFiles(req, entryId, user, { submit }) {
         stored.relativePath,
         file.type || '',
         file.size
+      );
+    }
+
+    for (const required of emptyOptionalApprovals) {
+      db.prepare(`
+        INSERT INTO documents (entry_id, level1_id, level2_id, level3_id, original_name, stored_name, file_path, mime_type, size)
+        VALUES (?, ?, ?, ?, ?, '', '', '', 0)
+      `).run(
+        entryId,
+        required.level1.id,
+        required.level2.id,
+        required.level3.id,
+        'No file uploaded'
       );
     }
   });
@@ -1254,10 +1281,11 @@ function reconcileEntryReviewState(entryId, reviewedBy) {
 }
 
 function isLevelFullyApproved(level, documents) {
-  const requiredDocs = level.level2s.flatMap((level2) => level2.level3s);
-  if (requiredDocs.length === 0) return false;
-  return requiredDocs.every((level3) => {
+  const documentSlots = level.level2s.flatMap((level2) => level2.level3s);
+  if (documentSlots.length === 0) return false;
+  return documentSlots.every((level3) => {
     const slotDocuments = documents.filter((document) => document.level1_id === level.id && document.level3_id === level3.id);
+    if (level3.is_optional && slotDocuments.length === 0) return true;
     return slotDocuments.length > 0 && slotDocuments.every((document) => document.review_status === 'approved');
   });
 }
@@ -1555,6 +1583,9 @@ async function downloadDocument(res, documentId, user) {
   `).get(documentId);
   if (!document) throw httpError(404, 'Document not found');
   assertCanAccessEntry(document, user);
+  if (!document.file_path) {
+    throw httpError(404, 'No file was uploaded for this optional document');
+  }
 
   const absolutePath = path.resolve(DATA_DIR, document.file_path);
   if (!absolutePath.startsWith(path.resolve(UPLOAD_ROOT))) {
@@ -1589,6 +1620,7 @@ async function downloadEntryDocumentsZip(res, entryId, user) {
     JOIN level2s l2 ON l2.id = d.level2_id
     JOIN level3s l3 ON l3.id = d.level3_id
     WHERE d.entry_id = ?
+      AND d.file_path <> ''
     ORDER BY l1.position, l2.position, l3.position, d.id
   `).all(entryId);
   if (documents.length === 0) throw httpError(404, 'No documents available for this entry');
@@ -1731,6 +1763,10 @@ function assertCanAccessEntry(entry, user) {
 
 function cleanText(value) {
   return value ? String(value).trim() : '';
+}
+
+function boolToInt(value) {
+  return value === true || value === 1 || value === '1' || value === 'true' ? 1 : 0;
 }
 
 function folderName(position, name) {
